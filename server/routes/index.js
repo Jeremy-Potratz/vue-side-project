@@ -1,9 +1,9 @@
 var admin = require('firebase-admin');
 //var app = admin.initializeApp();
 //var provider = new firebase.auth.GoogleAuthProvider();
-const router = require('express').Router()
-//const firebase = require('firebase');
-//const functions = require('firebase-functions');
+const router = require('express').Router();
+const firebase = require('firebase');
+const functions = require('firebase-functions');
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch');
 
