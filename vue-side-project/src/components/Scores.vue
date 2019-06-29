@@ -14,10 +14,49 @@
       </b-row>
     </b-container>
     <h2>{{this.TeamOne.score}} - {{this.TeamTwo.score}}</h2>
+  
+  <div>
+    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
+
+    <!-- <div class="mt-3">
+      Submitted Names:
+      <div v-if="submittedNames.length === 0">--</div>
+      <ul v-else class="mb-0 pl-3">
+        <li v-for="name in submittedNames">{{ name }}</li>
+      </ul>
+    </div> -->
+
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Submit Your Name"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group
+          label="Name"
+          label-for="name-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="name-input"
+            v-model="TeamOne.playerOne.name"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
+  
+  </div>
+  
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "HelloWorld",
   data: function(){
@@ -58,7 +97,30 @@ export default {
     },
     teamTwoScored: function(){
       this.TeamTwo.score++;
+    },
+    handleOk(bvModalEvt) {
+        // Prevent modal from closing
+        //bvModalEvt.preventDefault()
+        // Trigger submit handler
+        this.handleSubmit()
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+
+      // Push the name to submitted names
+      //this.submittedNames.push(this.name)
+
+      axios.get('http://localhost:3000/auth');
+
+      
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$refs.modal.hide()
+      })
     }
+  },
+  created : () => {
+    axios.get('http://localhost:3000/auth');
   }
 };
 </script>

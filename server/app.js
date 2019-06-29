@@ -6,6 +6,14 @@ const app = express();
 app.use(cors());
 app.use(fileUpload());
 
+// var admin = require("firebase-admin");
+
+// var serviceAccount = require("./serviceAccountKey.json");
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://vue-side-project.firebaseio.com"
+// });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

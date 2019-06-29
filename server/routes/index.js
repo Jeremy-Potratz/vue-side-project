@@ -18,6 +18,7 @@ admin.initializeApp({
 
 var db = admin.firestore();
 var users = db.collection('users');
+var games = db.collection('games');
 
 router.post('/login', (req, res) => {
 	var user = req.body.username[0]
@@ -89,19 +90,35 @@ router.post('/addAct', (req, res, next) => {
 });
 
 
-router.post('/auth', (req, res, next) => {
+router.get('/auth', (req, res, next) => {
+  console.log("Heremy");
+  var u = {
+    "name" : "Jeremy",
+    "Password" : "Otto"
+  };
+  users.doc(u.name).set(u);
 
-console.log(req.body.username[0]);
-console.log(req.body.username[1]);
+  var x = {
+    "game" : "Game One",
+    "players" : ["Jon", "Luke", "Brad", "Walker"],
+    "scoreOne" : 1,
+    "scoreTwo" : 2
+  };
+  games.doc(x.game).set(x);
 
-localStorage.setItem('user', req.body.username[0]);
-var u = {};
-u["username"] = req.body.username[0];
-u["password"] = req.body.username[1];
-u["jobs"] = [];
+ res.redirect("http://localhost:8080/home");
 
-users.doc(req.body.username[0]).set(u)
-res.redirect("http://localhost:3001/home");
+// console.log(req.body.username[0]);
+// console.log(req.body.username[1]);
+
+// localStorage.setItem('user', req.body.username[0]);
+// var u = {};
+// u["username"] = req.body.username[0];
+// u["password"] = req.body.username[1];
+// u["jobs"] = [];
+
+// users.doc(req.body.username[0]).set(u)
+// res.redirect("http://localhost:3001/home");
 
 });
 
@@ -111,3 +128,4 @@ res.redirect("http://localhost:3001/realsignin");
 })
 
 
+module.exports = router;
